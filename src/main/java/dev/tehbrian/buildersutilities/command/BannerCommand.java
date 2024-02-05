@@ -3,13 +3,12 @@ package dev.tehbrian.buildersutilities.command;
 import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
-import dev.tehbrian.tehlib.paper.cloud.PaperCloudCommand;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import dev.tehbrian.buildersutilities.banner.PlayerSessions;
 import dev.tehbrian.buildersutilities.util.Permissions;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public final class BannerCommand extends PaperCloudCommand<CommandSender> {
+public final class BannerCommand {
 
   private final PlayerSessions playerSessions;
 
@@ -20,7 +19,6 @@ public final class BannerCommand extends PaperCloudCommand<CommandSender> {
     this.playerSessions = playerSessions;
   }
 
-  @Override
   public void register(final PaperCommandManager<CommandSender> commandManager) {
     final var main = commandManager.commandBuilder("banner", "bc")
         .meta(CommandMeta.DESCRIPTION, "Opens the banner creator.")

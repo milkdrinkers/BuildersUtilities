@@ -1,6 +1,5 @@
 package dev.tehbrian.buildersutilities.user;
 
-import dev.tehbrian.tehlib.paper.user.PaperUser;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -9,18 +8,19 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.UUID;
 
-public final class User extends PaperUser {
+public final class User {
+
+  private final UUID uuid;
 
   private boolean ironDoorToggleEnabled = true;
   private boolean doubleSlabBreakEnabled = true;
   private boolean glazedTerracottaRotateEnabled = true;
 
-  private boolean nightVisionEnabled = false;
   private boolean noclipEnabled = false;
   private boolean advancedFlyEnabled = false;
 
   public User(final UUID uuid) {
-    super(uuid);
+    this.uuid = uuid;
   }
 
   public @Nullable Player getPlayer() {
@@ -67,19 +67,30 @@ public final class User extends PaperUser {
   }
 
   public boolean nightVisionEnabled() {
-    return this.nightVisionEnabled;
+    final @Nullable Player player = this.getPlayer();
+    if (player == null) {
+      return false;
+    }
+
+    final @Nullable PotionEffect nightVision = player.getPotionEffect(PotionEffectType.NIGHT_VISION);
+    return nightVision != null && nightVision.isInfinite();
   }
 
   public void nightVisionEnabled(final boolean nightVisionEnabled) {
-    this.nightVisionEnabled = nightVisionEnabled;
-
     final @Nullable Player player = this.getPlayer();
     if (player == null) {
       return;
     }
 
     if (nightVisionEnabled) {
-      player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+      player.addPotionEffect(new PotionEffect(
+          PotionEffectType.NIGHT_VISION,
+          PotionEffect.INFINITE_DURATION,
+          0,
+          true,
+          false,
+          false
+      ));
     } else {
       player.removePotionEffect(PotionEffectType.NIGHT_VISION);
     }

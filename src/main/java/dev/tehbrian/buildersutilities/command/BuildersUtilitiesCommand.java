@@ -5,11 +5,11 @@ import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
 import dev.tehbrian.buildersutilities.BuildersUtilities;
+import dev.tehbrian.buildersutilities.ability.AbilityMenuProvider;
 import dev.tehbrian.buildersutilities.config.LangConfig;
+import dev.tehbrian.buildersutilities.config.SpecialConfig;
 import dev.tehbrian.buildersutilities.user.UserService;
-import dev.tehbrian.buildersutilities.util.ChestSize;
 import dev.tehbrian.buildersutilities.util.Permissions;
-import dev.tehbrian.tehlib.paper.cloud.PaperCloudCommand;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerLevel;
@@ -19,20 +19,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.NodePath;
-import dev.tehbrian.buildersutilities.ability.AbilityMenuProvider;
-import dev.tehbrian.buildersutilities.config.SpecialConfig;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class BuildersUtilitiesCommand extends PaperCloudCommand<CommandSender> {
+public final class BuildersUtilitiesCommand {
 
   private final BuildersUtilities buildersUtilities;
   private final UserService userService;
@@ -77,7 +75,6 @@ public final class BuildersUtilitiesCommand extends PaperCloudCommand<CommandSen
     return chunks;
   }
 
-  @Override
   public void register(final PaperCommandManager<CommandSender> commandManager) {
     final var root = commandManager.commandBuilder("buildersutilities", "butils", "bu");
 
@@ -115,9 +112,9 @@ public final class BuildersUtilitiesCommand extends PaperCloudCommand<CommandSen
             final var packet = new ClientboundLevelChunkWithLightPacket(
                 nmsChunk.getSendingChunk(),
                 nmsLevel.getLightEngine(),
-                null, null, true, false
+                null, null, false
             );
-            nmsPlayer.trackChunk(nmsChunkPos, packet);
+            nmsPlayer.connection.send(packet);
           }
 
           sender.sendMessage(this.langConfig.c(NodePath.path("commands", "rc")));
@@ -139,9 +136,10 @@ public final class BuildersUtilitiesCommand extends PaperCloudCommand<CommandSen
         .handler(c -> {
           final var sender = (Player) c.getSender();
 
+          final int slotsRequired = (int) Math.ceil(this.specialConfig.items().size() / 9.0) * 9;
           final Inventory inv = Bukkit.createInventory(
               null,
-              ChestSize.SINGLE,
+              Math.max(Math.min(slotsRequired, 54), 9),
               this.langConfig.c(NodePath.path("menus", "special", "inventory-name"))
           );
 

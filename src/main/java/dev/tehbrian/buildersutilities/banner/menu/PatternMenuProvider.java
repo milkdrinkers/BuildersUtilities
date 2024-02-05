@@ -3,17 +3,17 @@ package dev.tehbrian.buildersutilities.banner.menu;
 import broccolai.corn.paper.item.special.BannerBuilder;
 import com.google.inject.Inject;
 import dev.tehbrian.buildersutilities.banner.Buttons;
+import dev.tehbrian.buildersutilities.banner.Sayge;
 import dev.tehbrian.buildersutilities.banner.Session;
+import dev.tehbrian.buildersutilities.config.ConfigConfig;
+import dev.tehbrian.buildersutilities.config.LangConfig;
+import dev.tehbrian.buildersutilities.util.ChestSize;
+import dev.tehbrian.buildersutilities.util.MenuItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.inventory.Inventory;
 import org.spongepowered.configurate.NodePath;
-import dev.tehbrian.buildersutilities.banner.Util;
-import dev.tehbrian.buildersutilities.config.ConfigConfig;
-import dev.tehbrian.buildersutilities.config.LangConfig;
-import dev.tehbrian.buildersutilities.util.ChestSize;
-import dev.tehbrian.buildersutilities.util.MenuItems;
 
 public final class PatternMenuProvider {
 
@@ -47,10 +47,10 @@ public final class PatternMenuProvider {
       default -> Material.WHITE_BANNER;
     };
 
-    for (int i = 0; i < Util.patternTypes().size(); i++) {
+    for (int i = 0; i < Sayge.patternTypes().size(); i++) {
       inv.setItem(i + 9, BannerBuilder.ofType(displayBase)
           .lore(this.langConfig.cl(NodePath.path("menus", "banner", "select")))
-          .addPattern(new Pattern(session.nextPatternColor(), Util.patternTypes().get(i)))
+          .addPattern(new Pattern(session.nextPatternColor(), Sayge.patternTypes().get(i)))
           .build()
       );
     }

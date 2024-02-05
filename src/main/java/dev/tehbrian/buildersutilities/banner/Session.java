@@ -2,6 +2,11 @@ package dev.tehbrian.buildersutilities.banner;
 
 import broccolai.corn.paper.item.PaperItemBuilder;
 import broccolai.corn.paper.item.special.BannerBuilder;
+import dev.tehbrian.buildersutilities.banner.menu.BaseMenuProvider;
+import dev.tehbrian.buildersutilities.banner.menu.ColorMenuProvider;
+import dev.tehbrian.buildersutilities.banner.menu.DoneMenuProvider;
+import dev.tehbrian.buildersutilities.banner.menu.PatternMenuProvider;
+import dev.tehbrian.buildersutilities.config.LangConfig;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
@@ -10,11 +15,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.NodePath;
-import dev.tehbrian.buildersutilities.banner.menu.BaseMenuProvider;
-import dev.tehbrian.buildersutilities.banner.menu.ColorMenuProvider;
-import dev.tehbrian.buildersutilities.banner.menu.DoneMenuProvider;
-import dev.tehbrian.buildersutilities.banner.menu.PatternMenuProvider;
-import dev.tehbrian.buildersutilities.config.LangConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,7 +127,7 @@ public final class Session {
     if (this.baseColor == null) {
       return DEFAULT_BANNER;
     } else {
-      return BannerBuilder.ofType(Util.bannerFromColor(this.baseColor))
+      return BannerBuilder.ofType(Sayge.bannerFromColor(this.baseColor))
           .patterns(this.patterns)
           .build();
     }
@@ -143,7 +143,7 @@ public final class Session {
    * Sessions start with {@code PICK_BASE} and then flip back and forth
    * between {@code PICK_COLOR} and {@code PICK_PATTERN}.
    */
-  enum Step {
+  public enum Step {
     PICK_BASE,
     PICK_COLOR,
     PICK_PATTERN,

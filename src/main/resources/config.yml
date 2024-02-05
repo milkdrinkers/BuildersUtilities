@@ -9,7 +9,16 @@
 # | TehBrian                  | you gotta go to me, okay? k bai, enjoy ;D
 # |                           |
 
+# Restores the WorldEdit helper commands found in the original plugin.
+# You must restart the server for changes to take effect.
+worldedit-aliases: false
+
 settings:
+  # Disables redstone behavior.
+  disable-redstone: false
+  # Disables physics for gravity-affected blocks (e.g., sand, gravel).
+  disable-gravity-physics: false
+  # Disables all other types of physics.
   disable-physics: false
 
   disable-entity-explode: true
@@ -32,5 +41,5 @@ heads:
     undo: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2RjOWU0ZGNmYTQyMjFhMWZhZGMxYjViMmIxMWQ4YmVlYjU3ODc5YWYxYzQyMzYyMTQyYmFlMWVkZDUifX19"
     randomize: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk3OTU1NDYyZTRlNTc2NjY0NDk5YWM0YTFjNTcyZjYxNDNmMTlhZDJkNjE5NDc3NjE5OGY4ZDEzNmZkYjIifX19"
 
-# Language configuration can be found in lang.yml
-# The items in the special items menu can be configured in special.yml
+# Language configuration can be found in lang.yml.
+# The items in the special items menu can be configured in special.yml.
